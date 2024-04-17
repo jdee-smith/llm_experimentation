@@ -1,0 +1,12 @@
+# https://docs.streamlit.io/develop/api-reference/configuration/config.toml
+
+[server]
+maxUploadSize = 250
+port = 8501
+address = "0.0.0.0"
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "dark"

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:
+    image: app:latest
+    ports:
+      - 8501:8501
+    volumes:
+      - ./sample_data:/sample_data
+    entrypoint: [ "python3", "-m", "streamlit", "run", "/src/app.py" ]
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    volumes:
+      - ./data:/root/.ollama
