@@ -19,8 +19,18 @@ def initialize_db(conn: duckdb.DuckDBPyConnection):
     for schema in ["Historical", "Baseline"]:
         conn.sql(f"CREATE SCHEMA IF NOT EXISTS {schema}")
 
-    df = pd.read_csv("sample_data/sales.csv")
-    conn.sql("CREATE TABLE IF NOT EXISTS Historical.RTS AS SELECT * FROM df")
+    historical_tts = pd.read_parquet("sample_data/historical_tts.parquet")
+    conn.sql(
+        "CREATE TABLE IF NOT EXISTS Historical.TTS AS SELECT * FROM historical_tts"
+    )
+
+    historical_rts = pd.read_parquet("sample_data/historical_rts.parquet")
+    conn.sql(
+        "CREATE TABLE IF NOT EXISTS Historical.RTS as SELECT * FROM historical_rts"
+    )
+
+    baseline_rts = pd.read_parquet("sample_data/baseline_rts.parquet")
+    conn.sql("CREATE TABLE IF NOT EXISTS BASELINE.RTS as SELECT * FROM baseline_rts")
 
 
 def main():
