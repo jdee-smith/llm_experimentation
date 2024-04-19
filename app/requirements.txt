@@ -1,4 +1,5 @@
 streamlit==1.33.0
 langchain==0.1.15
+langchain-core=0.1.42
 duckdb==0.10.1
 streamlit_code_editor==0.1.12
