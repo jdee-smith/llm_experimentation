@@ -16,21 +16,12 @@ def db_connect():
 
 
 def initialize_db(conn: duckdb.DuckDBPyConnection):
-    for schema in ["Historical", "Baseline"]:
-        conn.sql(f"CREATE SCHEMA IF NOT EXISTS {schema}")
+    TTS = pd.read_parquet("sample_data/tts.parquet")
+    RTS = pd.read_parquet("sample_data/rts.parquet")
+    IMD = pd.read_parquet("sample_data/imd.parquet")
 
-    historical_tts = pd.read_parquet("sample_data/historical_tts.parquet")
-    conn.sql(
-        "CREATE TABLE IF NOT EXISTS Historical.TTS AS SELECT * FROM historical_tts"
-    )
-
-    historical_rts = pd.read_parquet("sample_data/historical_rts.parquet")
-    conn.sql(
-        "CREATE TABLE IF NOT EXISTS Historical.RTS as SELECT * FROM historical_rts"
-    )
-
-    baseline_rts = pd.read_parquet("sample_data/baseline_rts.parquet")
-    conn.sql("CREATE TABLE IF NOT EXISTS BASELINE.RTS as SELECT * FROM baseline_rts")
+    for i in ["TTS", "RTS", "IMD"]:
+        conn.sql(f"CREATE TABLE IF NOT EXISTS {i} as SELECT * FROM {i}")
 
 
 def main():
